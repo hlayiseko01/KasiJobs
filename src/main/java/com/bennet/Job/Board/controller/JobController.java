@@ -2,9 +2,7 @@ package com.bennet.Job.Board.controller;
 
 import com.bennet.Job.Board.model.Job;
 import com.bennet.Job.Board.service.JobService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +21,25 @@ private final JobService jobService;
          return jobService.getAllJobs();
      }
 
+     @GetMapping("{id}")
+    public Job getJobById(@PathVariable Integer id){
+         return jobService.findById(id);
+     }
+
+     @PostMapping
+    public void saveJob(@RequestBody Job job){
+         jobService.saveJob(job);
+     }
+
+     @PutMapping()
+    public void update(Job job){
+         jobService.updateJob(job);
+     }
+
+     @DeleteMapping("/{id}")
+    public void deleteJob(@PathVariable Integer id){
+         jobService.deleteJob(id);
+     }
 
 
 }
