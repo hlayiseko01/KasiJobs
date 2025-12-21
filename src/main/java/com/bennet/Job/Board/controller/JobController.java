@@ -21,7 +21,7 @@ private final JobService jobService;
          return jobService.getAllJobs();
      }
 
-     @GetMapping("{id}")
+     @GetMapping("/{id}")
     public Job getJobById(@PathVariable Integer id){
          return jobService.findById(id);
      }
