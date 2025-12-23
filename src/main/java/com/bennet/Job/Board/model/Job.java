@@ -1,10 +1,7 @@
 package com.bennet.Job.Board.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 @Entity
@@ -22,7 +19,11 @@ public class Job {
    String employerName;
    LocalDate postedAt;
 
-    public Job(Integer jobId, String title, String description, String requirements, Double salary, String street, String suburb, String city, String employerName, LocalDate postedAt) {
+   @ManyToOne
+   @JoinColumn(name = "employer_id",nullable = false)
+   private User employer;
+
+    public Job(Integer jobId, String title, String description, String requirements, Double salary, String street, String suburb, String city, String employerName, LocalDate postedAt, User employer) {
         this.jobId = jobId;
         this.title = title;
         this.description = description;
@@ -33,6 +34,7 @@ public class Job {
         this.city = city;
         this.employerName = employerName;
         this.postedAt = postedAt;
+        this.employer = employer;
     }
 
     public Job() {
@@ -116,5 +118,13 @@ public class Job {
 
     public void setPostedAt(LocalDate postedAt) {
         this.postedAt = postedAt;
+    }
+
+    public User getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(User employer) {
+        this.employer = employer;
     }
 }

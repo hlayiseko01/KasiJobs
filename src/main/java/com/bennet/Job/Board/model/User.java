@@ -3,6 +3,8 @@ package com.bennet.Job.Board.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -18,6 +20,9 @@ public class User {
     UserType userType;
     String city;
     LocalDate createdAt;
+
+    @OneToMany(mappedBy = "employer")
+    private List<Job> jobs = new ArrayList<>();
 
     public User(Integer userId, String name, String email, String password, UserType userType, String city, LocalDate createdAt) {
         this.userId = userId;
