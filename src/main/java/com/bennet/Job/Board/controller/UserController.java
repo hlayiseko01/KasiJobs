@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping
-    public void saveUser(User user){
+    public void saveUser(@RequestBody User user){
         userService.saveUser(user);
     }
 
