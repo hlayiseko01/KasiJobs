@@ -1,6 +1,5 @@
 package com.bennet.Job.Board.dto;
 
-import com.bennet.Job.Board.model.User;
 
 import java.time.LocalDate;
 
@@ -12,6 +11,5 @@ public record JobRequestDTO(
         String street,
         String suburb,
         String city,
-        String employerName,
-        User employer) {
+        Long employerId) {
 }
