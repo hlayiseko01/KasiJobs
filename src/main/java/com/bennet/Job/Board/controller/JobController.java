@@ -1,5 +1,7 @@
 package com.bennet.Job.Board.controller;
 
+import com.bennet.Job.Board.dto.JobRequestDTO;
+import com.bennet.Job.Board.dto.JobResponseDTO;
 import com.bennet.Job.Board.model.Job;
 import com.bennet.Job.Board.service.JobService;
 import org.springframework.web.bind.annotation.*;
@@ -17,18 +19,18 @@ private final JobService jobService;
      }
 
      @GetMapping
-    public List<Job> listAllJobs(){
+    public List<JobResponseDTO> listAllJobs(){
          return jobService.getAllJobs();
      }
 
      @GetMapping("/{id}")
-    public Job getJobById(@PathVariable Integer id){
+    public JobResponseDTO getJobById(@PathVariable Integer id){
          return jobService.findById(id);
      }
 
      @PostMapping
-    public void saveJob(@RequestBody Job job){
-         jobService.saveJob(job);
+    public void saveJob(@RequestBody JobRequestDTO jobRequestDTO){
+         jobService.saveJob(jobRequestDTO);
      }
 
      @PutMapping()

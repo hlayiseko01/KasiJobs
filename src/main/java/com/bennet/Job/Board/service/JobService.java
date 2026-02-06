@@ -1,30 +1,37 @@
 package com.bennet.Job.Board.service;
 
+import com.bennet.Job.Board.dto.JobRequestDTO;
+import com.bennet.Job.Board.dto.JobResponseDTO;
+import com.bennet.Job.Board.mapper.JobResDTOMapper;
 import com.bennet.Job.Board.model.Job;
 import com.bennet.Job.Board.repository.JobRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class JobService {
     private final JobRepository jobRepository;
+    private final JobResDTOMapper jobResDTOMapper;
 
 
-    JobService(JobRepository jobrepository){
+    JobService(JobRepository jobrepository,JobResDTOMapper jobResDTOMapper){
         this.jobRepository=jobrepository;
+        this.jobResDTOMapper=jobResDTOMapper;
     }
 
-    public List<Job> getAllJobs(){
-        return jobRepository.findAll();
+    public List<JobResponseDTO> getAllJobs(){
+        return jobRepository.findAll().stream().map(jobResDTOMapper
+        ).toList();
     }
 
-    public Job findById(Integer id){
-        return jobRepository.findById(id).
+    public JobResponseDTO findById(Integer id){
+        return jobRepository.findById(id).map(jobResDTOMapper).
                 orElseThrow(()->new RuntimeException("That job that does not exist"));
     }
 
-   public void saveJob(Job job){
+   public void saveJob(JobRequestDTO jobRequestDTO){
         jobRepository.save(job);
    }
 
