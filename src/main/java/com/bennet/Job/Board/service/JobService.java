@@ -2,9 +2,12 @@ package com.bennet.Job.Board.service;
 
 import com.bennet.Job.Board.dto.JobRequestDTO;
 import com.bennet.Job.Board.dto.JobResponseDTO;
+import com.bennet.Job.Board.mapper.JobReqDTOMapper;
 import com.bennet.Job.Board.mapper.JobResDTOMapper;
 import com.bennet.Job.Board.model.Job;
+import com.bennet.Job.Board.model.User;
 import com.bennet.Job.Board.repository.JobRepository;
+import com.bennet.Job.Board.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +17,15 @@ import java.util.stream.Collectors;
 public class JobService {
     private final JobRepository jobRepository;
     private final JobResDTOMapper jobResDTOMapper;
+    private final JobReqDTOMapper jobReqDTOMapper;
+    private final UserRepository userRepository;
 
 
-    JobService(JobRepository jobrepository,JobResDTOMapper jobResDTOMapper){
+    JobService(JobRepository jobrepository, JobResDTOMapper jobResDTOMapper, JobReqDTOMapper jobReqDTOMapper, UserRepository userRepository){
         this.jobRepository=jobrepository;
         this.jobResDTOMapper=jobResDTOMapper;
+        this.jobReqDTOMapper = jobReqDTOMapper;
+        this.userRepository = userRepository;
     }
 
     public List<JobResponseDTO> getAllJobs(){
@@ -32,7 +39,16 @@ public class JobService {
     }
 
    public void saveJob(JobRequestDTO jobRequestDTO){
-        jobRepository.save(job);
+
+       User employer = userRepository.findById(Math.toIntExact(jobRequestDTO.employerId()))
+               .orElseThrow(() -> new RuntimeException("Employer not found"));
+
+       Job job = jobReqDTOMapper.apply(jobRequestDTO);
+
+
+       job.setEmployer(employer);
+
+       jobRepository.save(job);;
    }
 
    public void updateJob(Job job){
