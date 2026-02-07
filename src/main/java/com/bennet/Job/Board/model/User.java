@@ -11,7 +11,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer userId;
+    Long userId;
 
     String name;
     String email;
@@ -24,7 +24,7 @@ public class User {
     @OneToMany(mappedBy = "employer")
     private List<Job> jobs = new ArrayList<>();
 
-    public User(Integer userId, String name, String email, String password, UserType userType, String city, LocalDate createdAt) {
+    public User(Long userId, String name, String email, String password, UserType userType, String city, LocalDate createdAt) {
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -37,11 +37,11 @@ public class User {
     public User() {
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

@@ -40,7 +40,7 @@ public class JobService {
 
    public void saveJob(JobRequestDTO jobRequestDTO){
 
-       User employer = userRepository.findById(Math.toIntExact(jobRequestDTO.employerId()))
+       User employer = userRepository.findById(jobRequestDTO.employerId())
                .orElseThrow(() -> new RuntimeException("Employer not found"));
 
        Job job = jobReqDTOMapper.apply(jobRequestDTO);

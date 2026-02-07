@@ -21,7 +21,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findById(Integer id){
+    public User findById(Long id){
         return userRepository.findById(id).
                 orElseThrow(()->new RuntimeException("That User that does not exist"));
     }
@@ -43,7 +43,7 @@ public class UserService {
 
     }
 
-    public void deleteUser( Integer id){
+    public void deleteUser( Long id){
         if(userRepository.existsById(id)){
             userRepository.deleteById(id);
         }else {
